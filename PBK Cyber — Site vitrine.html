@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PBK Cyber — Apprenez la cybersécurité avec Pierrand Béni Kamanda</title>
+<meta name="description" content="Formation en ligne de cybersécurité et hacking éthique, en direct sur Google Meet, avec Pierrand Béni Kamanda.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ===== Variables (thème sombre exclusif) ===== */
+:root{
+  --bg:#0a0a0f; --card:rgba(255,255,255,.04); --line:rgba(255,255,255,.1);
+  --green:#00ff88; --cyan:#00d4ff; --text:#e6e8ee; --muted:#8b90a0;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Consolas,monospace;
+  color-scheme:dark; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);line-height:1.65;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.mono{font-family:var(--mono)}
+.container{width:min(1100px,92%);margin-inline:auto}
+section{padding:96px 0;position:relative;z-index:1}
+h2{font-size:clamp(1.8rem,4vw,2.6rem);margin:0 0 12px}
+.tag{font-family:var(--mono);color:var(--green);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
+.lead{color:var(--muted);max-width:640px}
+.grad{background:linear-gradient(90deg,var(--green),var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* Fond animé : canvas de particules + grille */
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(0,255,136,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,255,136,.04) 1px,transparent 1px);
+  background-size:48px 48px;animation:grid 12s linear infinite}
+@keyframes grid{to{background-position:48px 48px}}
+
+/* ===== Navigation ===== */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:rgba(10,10,15,.7);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font-family:var(--mono);font-weight:700;font-size:1.1rem}
+.logo span{color:var(--green)}
+.links{display:flex;gap:28px;align-items:center}
+.links a:not(.btn){color:var(--muted);font-size:.95rem;transition:color .2s}
+.links a:not(.btn):hover{color:var(--green)}
+.burger{display:none;background:none;border:1px solid var(--line);color:var(--text);border-radius:8px;padding:6px 10px;font-size:1.2rem;cursor:pointer}
+
+/* ===== Boutons ===== */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:10px;font-weight:600;border:1px solid var(--line);transition:transform .2s,box-shadow .2s,border-color .2s;cursor:pointer;font-family:var(--sans);font-size:1rem}
+.btn:hover{transform:translateY(-2px);border-color:var(--cyan);box-shadow:0 0 22px rgba(0,212,255,.3)}
+.btn-primary{background:linear-gradient(90deg,var(--green),var(--cyan));color:#04130c;border:none}
+.btn-primary:hover{box-shadow:0 0 28px rgba(0,255,136,.5)}
+.btn svg{width:20px;height:20px;fill:currentColor}
+.pulse{animation:pulse 2.2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(0,255,136,.55)}70%{box-shadow:0 0 0 18px rgba(0,255,136,0)}100%{box-shadow:0 0 0 0 rgba(0,255,136,0)}}
+
+/* ===== Hero ===== */
+.hero{min-height:calc(100vh - 64px);display:flex;align-items:center;padding:60px 0}
+.hero h1{font-size:clamp(2.2rem,6vw,4.2rem);line-height:1.1;margin:16px 0;font-weight:800}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:620px}
+.type{font-family:var(--mono);color:var(--cyan);min-height:1.6em;font-size:1.05rem}
+.type::after{content:"▋";color:var(--green);animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+
+/* ===== Cartes glassmorphism ===== */
+.grid{display:grid;gap:22px;margin-top:40px}
+.g3{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--card);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:28px;transition:border-color .3s,box-shadow .3s,transform .3s}
+.card:hover{border-color:var(--green);box-shadow:0 0 28px rgba(0,255,136,.18);transform:translateY(-4px)}
+.card h3{margin:8px 0;font-size:1.2rem}
+.card p,.card li{color:var(--muted)}
+.ico{font-size:1.8rem}
+.stats{display:flex;gap:36px;flex-wrap:wrap;margin-top:28px}
+.stats b{display:block;font-size:2rem;color:var(--green);font-family:var(--mono)}
+.stats span{color:var(--muted);font-size:.9rem}
+
+/* Programme : étapes */
+.step{counter-increment:s}
+.step .n::before{content:"0" counter(s);font-family:var(--mono);color:var(--cyan);font-size:.9rem}
+.steps{counter-reset:s}
+
+/* Tarifs */
+.price{font-size:3rem;font-weight:800;font-family:var(--mono)}
+.price small{font-size:1rem;color:var(--muted);font-weight:400}
+.plan ul{padding:0;list-style:none;margin:18px 0}
+.plan li{padding:6px 0 6px 26px;position:relative}
+.plan li::before{content:"✓";position:absolute;left:0;color:var(--green)}
+.plan.hot{border-color:var(--cyan);box-shadow:0 0 30px rgba(0,212,255,.15)}
+.badge{display:inline-block;font-family:var(--mono);font-size:.75rem;padding:3px 10px;border-radius:99px;border:1px solid var(--cyan);color:var(--cyan)}
+.note{font-size:.88rem;color:var(--muted);margin-top:24px;text-align:center}
+
+/* FAQ */
+details{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 22px;margin-top:14px;transition:border-color .3s}
+details[open]{border-color:var(--green)}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";color:var(--green);font-family:var(--mono)}
+details[open] summary::after{content:"−"}
+details p{color:var(--muted);margin:12px 0 0}
+
+/* CTA final */
+.final{text-align:center}
+.final .card{padding:56px 24px;border-color:rgba(0,255,136,.4)}
+
+/* Footer */
+footer{position:relative;z-index:1;border-top:1px solid var(--line);padding:40px 0 calc(40px + env(safe-area-inset-bottom,0px));color:var(--muted);font-size:.9rem}
+.f-in{display:flex;flex-wrap:wrap;gap:24px;justify-content:space-between}
+footer a:hover{color:var(--green)}
+
+/* Animations au défilement */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+
+/* ===== Responsive ===== */
+@media(max-width:760px){
+  .burger{display:block}
+  .links{position:absolute;top:100%;left:0;right:0;flex-direction:column;padding:20px;background:rgba(10,10,15,.97);border-bottom:1px solid var(--line);display:none}
+  .links.open{display:flex}
+  section{padding:68px 0}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <div class="container nav-in">
+    <a href="#top" class="logo">&gt;_ PBK<span> Cyber</span></a>
+    <button class="burger" id="burger" aria-label="Ouvrir le menu">☰</button>
+    <div class="links" id="links">
+      <a href="#apropos">À propos</a>
+      <a href="#programme">Programme</a>
+      <a href="#tarifs">Tarifs</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://chat.whatsapp.com/DlTknWRk03qDYEee9d76zY?s=cl&p=a&iam=2" class="btn btn-primary pulse" style="padding:8px 18px" target="_blank" rel="noopener noreferrer">Rejoindre</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="container">
+    <div class="type" id="type" aria-live="off"></div>
+    <h1>Apprenez la <span class="grad">cybersécurité</span> de zéro jusqu'au niveau avancé</h1>
+    <p>Une formation en ligne, en direct et accessible, animée par <strong style="color:var(--text)">Pierrand Béni Kamanda</strong>, étudiant en cybersécurité et hacker éthique avec 3 ans de pratique.</p>
+    <div class="cta-row">
+      <a href="#programme" class="btn">Découvrir la formation</a>
+       <a href="https://chat.whatsapp.com/DlTknWRk03qDYEee9d76zY?s=cl&p=a&iam=2" class="btn btn-primary pulse" style="padding:8px 18px" target="_blank" rel="noopener noreferrer"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.3Z"/></svg>
+        Rejoindre le groupe WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== À PROPOS ===== -->
+<section id="apropos">
+  <div class="container reveal">
+    <div class="tag">// à propos</div>
+    <h2>Un formateur proche de ses élèves</h2>
+    <p class="lead">Étudiant en cybersécurité, Pierrand pratique le hacking éthique depuis 3 ans, notamment sur la plateforme TryHackMe où il a validé plusieurs parcours et certifications. Il connaît les difficultés des débutants parce qu’il est encore sur le chemin de l’apprentissage : ici, pas de jargon inutile, mais un accompagnement patient, concret et bienveillant.</p>
+    <div class="stats">
+      <div><b>3 ans</b><span>de pratique terrain</span></div>
+      <div><b>THM</b><span>parcours &amp; certifications</span></div>
+      <div><b>100 %</b><span>en ligne, en direct</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRAMME ===== -->
+<section id="programme">
+  <div class="container">
+    <div class="reveal">
+      <div class="tag">// programme &amp; méthode</div>
+      <h2>Une progression étape par étape</h2>
+      <p class="lead">Cours en direct en visioconférence sur <strong>Google Meet</strong>, suivi personnalisé et exercices pratiques à chaque étape.</p>
+    </div>
+    <div class="grid g3 steps">
+      <div class="card step reveal"><div class="n"></div><div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-globe preview-icon"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></div><h3>Réseau &amp; Linux</h3><p>Modèle OSI, TCP/IP, ligne de commande, permissions, scripting de base.</p></div>
+      <div class="card step reveal"><div class="n"></div><div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye preview-icon"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Reconnaissance</h3><p>OSINT, scan de ports, énumération de services, méthodologie de test.</p></div>
+      <div class="card step reveal"><div class="n"></div><div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-swords preview-icon"><path d="m13 19 6-6"/><path d="M14.5 17.5 3.586 6.586A2 2 0 013 5.172V3h2.172a2 2 0 011.414.586L17.5 14.5"/><path d="m14.828 6.172 2.586-2.586A2 2 0 0118.828 3H21v2.172a2 2 0 01-.586 1.414l-2.586 2.586"/><path d="m16 16 4 4"/><path d="m19 21 2-2"/><path d="m5 14 4 4"/><path d="m5 21-2-2"/><path d="M7.5 16.5 4 20"/></svg></div><h3>Techniques offensives</h3><p>Vulnérabilités web, exploitation en environnement contrôlé, élévation de privilèges.</p></div>
+      <div class="card step reveal"><div class="n"></div><div class="ico"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shield-lock preview-icon"><path d="M20 9.807V6a1 1 0 00-1-1c-2 0-4.49-1.19-6.24-2.72a1.17 1.17 0 00-1.52 0C9.5 3.8 7 5 5 5a1 1 0 00-1 1v7c0 3.88 2.107 6.254 5 7.796"/><path d="M19 17v-2a2 2 0 00-4 0v2"/><rect x="13" y="17" width="8" height="5" rx="1"/></svg></div><h3>Techniques défensives</h3><p>Durcissement, analyse de logs, détection, bonnes pratiques de protection.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TARIFS ===== -->
+<section id="tarifs">
+  <div class="container">
+    <div class="reveal" style="text-align:center">
+      <div class="tag">// tarifs &amp; parcours</div>
+      <h2>Une offre unique : <span class="grad">50 $</span> pour 2 mois</h2>
+      <p class="lead" style="margin-inline:auto">Choisissez le parcours qui correspond à votre rythme.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card plan reveal">
+        <span class="badge">Inclus</span>
+        <h3>Parcours Standard</h3>
+        <div class="price">50 $<small> / 2 mois</small></div>
+        <ul>
+          <li>Apprentissage théorique complet</li>
+          <li>Cours en direct sur Google Meet</li>
+          <li>Pratique sur les environnements gratuits</li>
+          <li>Suivi et réponses à vos questions</li>
+        </ul>
+        <a href="https://chat.whatsapp.com/DlTknWRk03qDYEee9d76zY?s=cl&p=a&iam=2" class="btn btn-primary pulse" style="padding:8px 18px" target="_blank" rel="noopener noreferrer">Rejoindre</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq">
+  <div class="container reveal" style="max-width:800px">
+    <div class="tag">// faq</div>
+    <h2>Questions fréquentes</h2>
+    <details><summary>Faut-il des bases pour commencer ?</summary><p>Non. La formation démarre de zéro avec les bases du réseau et de Linux.</p></details>
+    <details><summary>Comment se déroulent les cours ?</summary><p>En direct par visioconférence sur Google Meet. Les détails et horaires sont partagés dans le groupe WhatsApp.</p></details>
+    <details><summary>De quel matériel ai-je besoin ?</summary><p>Un ordinateur avec une connexion internet stable suffit. Les machines de pratique tournent dans le navigateur via TryHackMe.</p></details>
+    <details><summary>Quelle différence entre les deux parcours ?</summary><p>Le Standard utilise les ressources gratuites de TryHackMe. L’Accéléré ajoute un abonnement Premium (à votre charge) pour pratiquer sans limite.</p></details>
+    <details><summary>Cette formation est-elle légale ?</summary><p>Oui. Tout est enseigné dans un cadre strictement éthique, légal et éducatif, sur des environnements autorisés.</p></details>
+  </div>
+</section>
+
+<!-- ===== CTA & CONTACT ===== -->
+<section class="final" id="contact">
+  <div class="container reveal">
+    <div class="card">
+      <div class="tag">// prêt à commencer ?</div>
+      <h2>Réservez votre place <span class="grad">maintenant</span></h2>
+      <p class="lead" style="margin:0 auto 28px">Rejoignez le groupe WhatsApp pour les dates, les modalités d’inscription et poser vos questions directement.</p>
+      <!-- Remplacez #lien-groupe-whatsapp par le lien d’invitation réel du groupe -->
+      <a href="https://chat.whatsapp.com/DlTknWRk03qDYEee9d76zY?s=cl&amp;p=a&amp;iam=2" class="btn btn-primary pulse" style="padding:8px 18px" target="_blank" rel="noopener noreferrer" _msttexthash="44863" _msthash="7"><svg viewBox="0 0 24 24">
+        <path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.2 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.3 0 .5l-.4.6-.4.4c-.1.2-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.8-.1 1.3Z"/>
+      </svg>Rejoindre</a>
+      </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container f-in">
+    <div>
+      <div class="logo">&gt;_ PBK<span> Cyber</span></div>
+      <p style="max-width:420px">Éthique avant tout : les techniques enseignées sont destinées à un usage strictement légal et éducatif, sur des systèmes dont vous avez l’autorisation.</p>
+    </div>
+    <div>
+      <a href="#apropos">À propos</a> · <a href="#programme">Programme</a> · <a href="#tarifs">Tarifs</a> · <a href="#faq">FAQ</a>
+      <p>© 2026 Pierrand Béni Kamanda — Mentions légales : site à vocation pédagogique, non affilié à TryHackMe ni à Google.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Menu mobile */
+const links=document.getElementById('links');
+document.getElementById('burger').onclick=()=>links.classList.toggle('open');
+links.querySelectorAll('a').forEach(a=>a.onclick=()=>links.classList.remove('open'));
+
+/* Effet machine à écrire (messages en boucle) */
+const msgs=['$ whoami → pierrand_béni_kamanda','$ nmap -sV cible.lab → analyse autorisée…','$ echo "hacker éthique, étudiant, pédagogue"','$ ./start_formation.sh --niveau=débutant'];
+const el=document.getElementById('type');let m=0,c=0,del=false;
+(function tick(){
+  const t=msgs[m];
+  el.textContent=t.slice(0,c);
+  if(!del&&c===t.length){del=true;return setTimeout(tick,1600)}
+  if(del&&c===0){del=false;m=(m+1)%msgs.length}
+  c+=del?-1:1;setTimeout(tick,del?25:55);
+})();
+
+/* Apparition au défilement */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+
+/* Particules en arrière-plan */
+const cv=document.getElementById('bg'),cx=cv.getContext('2d');let W,H,P=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=Array.from({length:Math.min(70,Math.floor(W/18))},()=>({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35}))}
+size();addEventListener('resize',size);
+(function draw(){
+  cx.clearRect(0,0,W,H);
+  P.forEach((p,i)=>{
+    p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H)p.vy*=-1;
+    cx.fillStyle='rgba(0,255,136,.7)';cx.fillRect(p.x,p.y,2,2);
+    for(let j=i+1;j<P.length;j++){const q=P[j],d=Math.hypot(p.x-q.x,p.y-q.y);
+      if(d<120){cx.strokeStyle=`rgba(0,212,255,${.15*(1-d/120)})`;cx.beginPath();cx.moveTo(p.x,p.y);cx.lineTo(q.x,q.y);cx.stroke()}}
+  });
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
